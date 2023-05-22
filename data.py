@@ -1,12 +1,18 @@
 import yfinance as yf
 import pandas as pd
-import mplfinance as mpf
 from datetime import datetime
 import os
 
+# Abrir el archivo de texto en modo lectura
+with open('Tikers.txt', 'r') as archivo:
+    # Leer el contenido del archivo
+    contenido = archivo.read() 
+# Dividir el contenido en una lista utilizando el salto de línea como separador
+valores = contenido.split('\n')
 
-#Parametros
-ticker = "AAPL"
+
+
+#Parametros de tiempo
 start_date = "2010-01-01"
 end_date = datetime.now().strftime('%Y-%m-%d')
 
@@ -38,11 +44,17 @@ def importData (ticker, start_date, end_date):
 
 
 
-tikerData = importData (ticker, start_date, end_date)
+def refresh_Data():
+    for i in valores:
+        ticker=i
+        tikerData = importData (ticker, start_date, end_date)
+        tikerData.to_csv('TickersData/'+ticker+'.csv', index=False)
 
-mpf.plot(tikerData, type='candle', mav=(100,200), volume=True, title='Apple Stock')
 
-
-
-
+def Tikers_Cargados():
+# Ruta de la carpeta
+    folder_path = os.path.join(os.getcwd(), "TickersData")
+# Obtener la lista de nombres de archivos en la carpeta
+    nombres_archivos = os.listdir(folder_path)
+    return nombres_archivos
 

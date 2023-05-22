@@ -2,7 +2,9 @@ from data import *
 def main():
     # Código de inicialización si es necesario
     # Llamado a funciones o clases necesarias
-    importData()
+    
+    refresh_Data()
+    
 
 if __name__ == '__main__':
     main()
